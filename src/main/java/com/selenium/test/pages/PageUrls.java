@@ -12,7 +12,7 @@ public final class PageUrls {
 
     public final String BASE_URL = new TestConfig().getSystemUnderTestBaseUrl();
 
-    public final String PROMIN_REPORTS_URL = "http://prominreports.privatbank.ua/WebVyborkiIQ/Vyborki";
+    public static final String PROMIN_REPORTS_URL = "http://prominreports.privatbank.ua/WebVyborkiIQ/Vyborki";
 
 /*    public final String ADMIN_MAIN_PAGE =
             String.format("%s/Admin", new TestConfig().getSystemUnderTestBaseUrl());*/

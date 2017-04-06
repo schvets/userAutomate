@@ -6,29 +6,27 @@ import com.selenium.test.pages.ProminReport;
 import com.selenium.test.specification.TestConfig;
 import com.selenium.test.tools.DayQualifier;
 import com.selenium.test.tools.WebDriverUtils;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.awt.*;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
  * Created by Aleksandr on 05.04.2017.
  */
 public class AuthTest {
-    @BeforeTest
+    @BeforeClass
     public void setUp() {
-        new WebDriverUtils().load(new PageUrls().PROMIN_REPORTS_URL);
+        new WebDriverUtils().load(new TestConfig().getSystemUnderTestBaseUrl());
     }
 
-/*    @AfterTest
+    @AfterClass
     public void tearDown() {
         new WebDriverUtils().stop();
-    }*/
+    }
 
     @Test
     public void testUserAuth() {
@@ -41,41 +39,36 @@ public class AuthTest {
     }
 
     @Test
-    public void testProminReports() throws InterruptedException, AWTException {
+    public void testProminReports() {
+        SimpleDateFormat curentFormatDate = new SimpleDateFormat("yyyy/MM/dd");
         Calendar calendar = new GregorianCalendar();
-        calendar.add(Calendar.DAY_OF_YEAR, -2);
-        DayQualifier dayQualifier = new DayQualifier();
-        String startDate = dayQualifier.getFormatedDate(calendar.getTime());
-        String endDate = dayQualifier.getFormatedDate(new java.util.Date());
-
-        /*
+        String startDate = curentFormatDate.format(calendar.getTime());
+        new WebDriverUtils().load(PageUrls.PROMIN_REPORTS_URL);
         ProminReport prominReport = new ProminReport();
-        Thread.sleep(3000);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         prominReport.getCreateButton().click();
         prominReport.getChooseTypeButton().click();
         prominReport.getFilterTextInput().type("INKASR");
         prominReport.getSubmitSerchResult().click();
         DayQualifier dayQualifier = new DayQualifier();
         int currentDayNum = dayQualifier.getWeekDay(new java.util.Date());
-        Calendar calendar = new GregorianCalendar();
+        Calendar newCalendar = Calendar.getInstance();
         if (currentDayNum == 2) {
-            calendar.add(Calendar.DAY_OF_YEAR, -3);
-            prominReport.getStartDateInput().type(String.valueOf(calendar.getTime()));
-            prominReport.getEndDateInput().type(String.valueOf(new java.util.Date()));
-        } else {
-            calendar.add(Calendar.DAY_OF_YEAR, -1);
-            System.out.println(calendar.getTime());
-            String startDate = dayQualifier.getFormatedDate(calendar.getTime());
-            String endDate = dayQualifier.getFormatedDate(new java.util.Date());
-            prominReport.getStartDateInput().type(startDate);
+            newCalendar.add(Calendar.DATE, -3);
+            String endDate = curentFormatDate.format(newCalendar.getTime());
             prominReport.getEndDateInput().type(endDate);
-            System.out.println(startDate);
-            System.out.println(endDate);
+        } else {
+            newCalendar.add(Calendar.DATE, -1);
+            String endDate = curentFormatDate.format(newCalendar.getTime());
+            prominReport.getEndDateInput().type(endDate);
         }
+        prominReport.getStartDateInput().type(startDate);
         prominReport.getSubType().selectByVisibleText("TRANSACTION - Отчёт по транзакциям инкасаторов");
-
         prominReport.getCreateorderButton().click();
-*/
     }
 }
 
